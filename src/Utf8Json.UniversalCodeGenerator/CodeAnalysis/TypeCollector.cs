@@ -405,7 +405,7 @@ namespace Utf8Json.UniversalCodeGenerator
                     Type = item.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
                     ShortTypeName = item.Type.ToDisplayString(binaryWriteFormat)
                 };
-                System.Console.WriteLine($"{item.ContainingNamespace.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}, {item.ContainingNamespace.ToDisplayString()}, {item.Type.MetadataName}");
+                System.Console.WriteLine($"{item.ContainingNamespace.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}, {item.ContainingNamespace.ToDisplayString()}, {item.Type.MetadataName}, {item.ContainingType.ToDisplayString()}");
                 
                 if (!member.IsReadable && !member.IsWritable) continue;
 
