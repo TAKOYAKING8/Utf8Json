@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Semantics;
 using System;
 using System.Collections.Generic;
@@ -447,6 +448,17 @@ namespace Utf8Json.UniversalCodeGenerator
 
                 CollectCore(item.Type); // recursive collect
             }
+            Console.WriteLine($""
+                     + $"=============wowow =================="
+                );
+            var members = type.GetAllMembers().OfType<MemberDeclarationSyntax>();
+            foreach (var member in members) {
+                var property = member as PropertyDeclarationSyntax;
+                Console.WriteLine($""
+                     + $"{property.Identifier}\n"
+                );
+            }
+
             foreach (var item in type.GetAllMembers().OfType<IFieldSymbol>())
             {
                 if (item.GetAttributes().FindAttributeShortName(typeReferences.IgnoreDataMemberAttribute) != null) continue;
