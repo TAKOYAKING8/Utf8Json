@@ -418,6 +418,8 @@ namespace Utf8Json.UniversalCodeGenerator
                     + $", {item.Type.ContainingNamespace?.ContainingCompilation?.GlobalNamespace?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
                     + $", ============-- type ===============\n"
                     + $", {type.ContainingNamespace?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
+                    + $", {string.Join(", ", type.TypeArguments)}\n"
+                    //+ $", {item.Type.ContainingNamespace?.ContainingCompilation.us}\n"
 
 
                     );
