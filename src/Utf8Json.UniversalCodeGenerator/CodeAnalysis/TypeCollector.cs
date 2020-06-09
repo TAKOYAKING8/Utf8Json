@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Semantics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -416,6 +417,10 @@ namespace Utf8Json.UniversalCodeGenerator
                     + $", {item.Type.ContainingNamespace?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
                     + $", {item.Type.ContainingType?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
                     + $", {item.Type.ContainingNamespace?.ContainingCompilation?.GlobalNamespace?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
+                    + $", ============-- yeey ===============\n"
+                    + $", {item.OriginalDefinition}\n"
+                    + $", {item.Parameters}\n"
+                    + $", {item.GetRootOperation()}\n"
                     + $", ============-- type ===============\n"
                     + $", {type.ContainingNamespace?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
                     + $", {string.Join(", ", type.TypeArguments)}\n"
@@ -423,6 +428,8 @@ namespace Utf8Json.UniversalCodeGenerator
 
 
                     );
+
+                item.OriginalDefinition
 
                 if (!member.IsReadable && !member.IsWritable) continue;
 
