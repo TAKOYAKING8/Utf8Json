@@ -243,8 +243,9 @@ namespace Utf8Json.UniversalCodeGenerator
 
                     Console.WriteLine($""
                      + $"identifier: {syntax.Identifier}\n" // prop name
-                     + $"full string: {syntax.ToFullString()}\n"
-                     + $"syntax identifier: {syntax.Type}\n"
+                     + $"full string: {syntax.ToFullString()}\n" // public Vector3 Position { get; set; }
+                     + $"type: {syntax.Type}\n" // Vector3
+                     + $"first directive : {syntax.GetFirstDirective()}\n" // Vector3
                     );
 
                     // 戻り値に関するSymbolInfoを取得
