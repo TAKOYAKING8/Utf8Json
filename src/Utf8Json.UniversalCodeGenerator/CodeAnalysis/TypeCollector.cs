@@ -417,6 +417,7 @@ namespace Utf8Json.UniversalCodeGenerator
                     + $", {item.Type.ContainingNamespace?.ContainingCompilation?.GlobalNamespace?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
                     + $", {item.OriginalDefinition}\n"
                     + $", {item.DeclaringSyntaxReferences}\n"
+                    + $", {item.TypeCustomModifiers}\n"
                     + $", ============-- type ===============\n"
                     + $", {type.ContainingNamespace?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
                     + $", {string.Join(", ", type.TypeArguments)}\n"
