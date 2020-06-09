@@ -178,8 +178,7 @@ namespace Utf8Json.UniversalCodeGenerator
 
         // --- 
 
-        public TypeCollector(IEnumerable<string> inputFiles, IEnumerable<string> inputDirs, IEnumerable<string> conditinalSymbols, bool disallowInternal)
-        {
+        public TypeCollector(IEnumerable<string> inputFiles, IEnumerable<string> inputDirs, IEnumerable<string> conditinalSymbols, bool disallowInternal) {
             var compilation = RoslynExtensions.GetCompilationFromProject(inputFiles, inputDirs,
                 conditinalSymbols.Concat(new[] { CodegeneratorOnlyPreprocessorSymbol }).ToArray()
             );
@@ -188,11 +187,9 @@ namespace Utf8Json.UniversalCodeGenerator
             this.disallowInternal = disallowInternal;
 
             targetTypes = compilation.GetNamedTypeSymbols()
-                .Where(x =>
-                {
+                .Where(x => {
                     if (x.DeclaredAccessibility == Accessibility.Public) return true;
-                    if (!disallowInternal)
-                    {
+                    if (!disallowInternal) {
                         return (x.DeclaredAccessibility == Accessibility.Friend);
                     }
 
@@ -200,6 +197,58 @@ namespace Utf8Json.UniversalCodeGenerator
                 })
                 .Where(x => (x.TypeKind == TypeKind.Interface) || (x.TypeKind == TypeKind.Class) || (x.TypeKind == TypeKind.Struct))
                 .ToArray();
+            NewMethod(compilation);
+        }
+
+        private static void NewMethod(Compilation compilation) {
+            foreach (var tree in compilation.SyntaxTrees) {
+                // コンパイラからセマンティックモデルの取得
+                var semanticModel = compilation.GetSemanticModel(tree);
+                // 構文木からルートの子ノード群を取得
+                var nodes = tree.GetRoot().DescendantNodes();
+                var propertySyntaxArray = nodes.OfType<PropertyDeclarationSyntax>();
+                foreach (var syntax in propertySyntaxArray) {
+                    var symbol = semanticModel.GetDeclaredSymbol(syntax);
+                    Console.WriteLine("{0} {1}", symbol.DeclaredAccessibility, symbol);
+                    Console.WriteLine(" Namespace: {0}", symbol.ContainingSymbol);
+                    Console.WriteLine(" {0}: {1}", nameof(symbol.IsStatic), symbol.IsStatic);
+
+                    // アクセサの取得
+                    var accessors = from accessor in syntax.AccessorList.Accessors
+                                    select new {
+                                        Name = accessor.Keyword.ToString(),
+                                        Access = accessor.Modifiers.Count > 0 ?
+                                            semanticModel.GetDeclaredSymbol(accessor).DeclaredAccessibility :
+                                            Accessibility.Public
+                                    };
+
+                    // クエリ式使わない場合
+                    //var accessors = new List<(string Name, Accessibility Access)>();
+                    //foreach (var accessor in syntax.AccessorList.Accessors)
+                    //{
+                    //    var accessibility = Accessibility.Public;
+                    //    var keyword = accessor.Keyword.ToString();
+                    //    if (accessor.Modifiers.Count > 0)
+                    //    {
+                    //        var msym = semanticModel.GetDeclaredSymbol(accessor);
+                    //        accessibility = msym.DeclaredAccessibility;
+                    //    }
+                    //    accessors.Add((keyword, accessibility));
+                    //}
+
+                    // アクセサの出力
+                    Console.WriteLine(" Accessors:");
+                    foreach (var accessor in accessors)
+                        Console.WriteLine("  {0} {1}", accessor.Access, accessor.Name);
+
+                    // 戻り値に関するSymbolInfoを取得
+                    var symbolInfo = semanticModel.GetSymbolInfo(syntax.Type);
+                    // SymbolInfoからシンボルを取得
+                    var sym = symbolInfo.Symbol;
+                    // 戻り値の出力
+                    Console.WriteLine(" Type: {0}", sym.ToDisplayString());
+                }
+            }
         }
 
         void ResetWorkspace()
@@ -453,6 +502,7 @@ namespace Utf8Json.UniversalCodeGenerator
                 );
             //var members = type.GetAllMembers().OfType<MemberDeclarationSyntax>();
             var members = type.GetAllMembers().OfType<PropertyDeclarationSyntax>();
+            //var members = type.GetAllMembers().OfType<PropertyDeclarationSyntax>();
             foreach (var member in members) {
                 var property = member as PropertyDeclarationSyntax;
                 Console.WriteLine($""
