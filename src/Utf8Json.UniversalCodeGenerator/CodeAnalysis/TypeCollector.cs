@@ -405,6 +405,8 @@ namespace Utf8Json.UniversalCodeGenerator
                     Type = item.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
                     ShortTypeName = item.Type.ToDisplayString(binaryWriteFormat)
                 };
+                System.Console.WriteLine($"{item.ContainingNamespace.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}, {item.ContainingNamespace.ToDisplayString()}, {item.Type.MetadataName}");
+                
                 if (!member.IsReadable && !member.IsWritable) continue;
 
                 stringMembers.Add(name, member);
@@ -431,6 +433,9 @@ namespace Utf8Json.UniversalCodeGenerator
                     Type = item.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
                     ShortTypeName = item.Type.ToDisplayString(binaryWriteFormat)
                 };
+                System.Console.WriteLine($"{item.ContainingNamespace.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}, {item.ContainingNamespace.ToDisplayString()}, {item.Type.MetadataName}");
+
+
                 if (!member.IsReadable && !member.IsWritable) continue;
 
                 stringMembers.Add(name, member);
