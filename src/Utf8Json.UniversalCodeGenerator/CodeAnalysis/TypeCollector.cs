@@ -417,9 +417,12 @@ namespace Utf8Json.UniversalCodeGenerator
                     + $", {item.Type.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}\n"
                     + $", {item.Type.ToDisplayString()}\n"
                      + $", ============-- oooo ===============\n"
-                    + $", {item.Type.GetRootOperation()?.Syntax?.GetReference()}\n"
-                    + $", {item.Type.OriginalDefinition}\n"
-                    + $", {item.Type.BaseType}\n"
+                    + $", {item.Type.SpecialType}\n"
+                    + $", {item.Type.Kind}\n"
+                    + $", {item.Type.TypeKind}\n"
+                    + $", {item.Type.GetRootOperation()?.Syntax?.GetReference()}\n" // null
+                    + $", {item.Type.OriginalDefinition}\n" 
+                    + $", {item.Type.BaseType}\n" // System.ValueType,
                     + $", {item.Type}\n"
                     + $", {item.GetType().FullName}\n"
                     + $", ============-- yyy ===============\n"
