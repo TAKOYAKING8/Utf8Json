@@ -242,7 +242,9 @@ namespace Utf8Json.UniversalCodeGenerator
                         Console.WriteLine("  {0} {1}", accessor.Access, accessor.Name);
 
                     Console.WriteLine($""
-                     + $"syntax identifier: {syntax.Identifier}\n"
+                     + $"identifier: {syntax.Identifier}\n" // prop name
+                     + $"full string: {syntax.ToFullString()}\n"
+                     + $"syntax identifier: {syntax.Type}\n"
                     );
 
                     // 戻り値に関するSymbolInfoを取得
