@@ -416,6 +416,8 @@ namespace Utf8Json.UniversalCodeGenerator
                     + $", {item.Type.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}\n"
                     + $", {item.Type.ToDisplayString()}\n"
                      + $", ============-- oooo ===============\n"
+                    + $", {item.Type.OriginalDefinition}\n"
+                    + $", {item.Type.BaseType}\n"
                     + $", {item.GetType().FullName}\n"
                     + $", {item.Type.Locations}\n"
                     + $", {item.Type.ContainingNamespace?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
