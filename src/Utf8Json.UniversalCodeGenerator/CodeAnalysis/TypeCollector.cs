@@ -241,12 +241,16 @@ namespace Utf8Json.UniversalCodeGenerator
                     foreach (var accessor in accessors)
                         Console.WriteLine("  {0} {1}", accessor.Access, accessor.Name);
 
+                    Console.WriteLine($""
+                     + $"syntax identifier: {syntax.Identifier}\n"
+                    );
+
                     // 戻り値に関するSymbolInfoを取得
-                    var symbolInfo = semanticModel.GetSymbolInfo(syntax.Type);
+                    //var symbolInfo = semanticModel.GetSymbolInfo(syntax.Type);
                     // SymbolInfoからシンボルを取得
-                    var sym = symbolInfo.Symbol;
+                    //var sym = symbolInfo.Symbol;
                     // 戻り値の出力
-                    Console.WriteLine(" Type: {0}", sym.ToDisplayString());
+                    // Console.WriteLine(" Type: {0}", sym.ToDisplayString());
                 }
             }
         }
