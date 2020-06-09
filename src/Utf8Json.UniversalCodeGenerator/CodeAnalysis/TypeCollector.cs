@@ -409,7 +409,7 @@ namespace Utf8Json.UniversalCodeGenerator
                     $", {item.Type.ContainingSymbol.ToDisplayString()}, , {item.Type.ContainingAssembly.ToDisplayString()}, {item.Type.ContainingModule.ToDisplayString()},,,,,,, \n" +
                     $"{item.ContainingNamespace}, {item.DeclaredAccessibility}, {item.ContainingSymbol}\n" +
                     $", {item.ContainingSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
-                    + $", {item.ContainingNamespace}\n"
+                    + $", {item.ContainingNamespace.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}\n"
 
                     );
 
