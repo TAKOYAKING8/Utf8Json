@@ -48,7 +48,7 @@ namespace Utf8Json.UniversalCodeGenerator
         public string Type { get; set; }
         public string Name { get; set; }
         public string Namespace { get; set; }
-        public string FullType => Namespace == null ? Name : Namespace + "." + Name;
+        public string FullType => Namespace == null ? Type : Namespace + "." + Type;
         public string MemberName { get; set; }
         public string ShortTypeName { get; set; }
 
