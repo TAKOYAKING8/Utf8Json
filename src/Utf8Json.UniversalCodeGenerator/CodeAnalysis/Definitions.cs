@@ -47,6 +47,8 @@ namespace Utf8Json.UniversalCodeGenerator
         public bool IsReadable { get; set; }
         public string Type { get; set; }
         public string Name { get; set; }
+        public string Namespace { get; set; }
+        public string FullType => Namespace == null ? Name : Namespace + "." + Name;
         public string MemberName { get; set; }
         public string ShortTypeName { get; set; }
 
@@ -77,7 +79,7 @@ namespace Utf8Json.UniversalCodeGenerator
             }
             else
             {
-                return $"formatterResolver.GetFormatterWithVerify<{Type}>().Serialize(ref writer, value.{MemberName}, formatterResolver)";
+                return $"formatterResolver.GetFormatterWithVerify<{FullType}>().Serialize(ref writer, value.{MemberName}, formatterResolver)";
             }
         }
 
@@ -89,7 +91,7 @@ namespace Utf8Json.UniversalCodeGenerator
             }
             else
             {
-                return $"formatterResolver.GetFormatterWithVerify<{Type}>().Deserialize(ref reader, formatterResolver)";
+                return $"formatterResolver.GetFormatterWithVerify<{FullType}>().Deserialize(ref reader, formatterResolver)";
             }
         }
     }
