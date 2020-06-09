@@ -410,6 +410,7 @@ namespace Utf8Json.UniversalCodeGenerator
                     $"{item.ContainingNamespace}, {item.DeclaredAccessibility}, {item.ContainingSymbol}\n" +
                     $", {item.ContainingSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
                     + $", {item.ContainingNamespace.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}\n"
+                    + $", {item.Type.ContainingSymbol?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
 
                     );
 
