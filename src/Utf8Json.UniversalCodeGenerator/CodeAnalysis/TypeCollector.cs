@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Semantics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -416,9 +417,12 @@ namespace Utf8Json.UniversalCodeGenerator
                     + $", {item.Type.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}\n"
                     + $", {item.Type.ToDisplayString()}\n"
                      + $", ============-- oooo ===============\n"
+                    + $", {item.Type.GetRootOperation()?.Syntax?.GetReference()}\n"
                     + $", {item.Type.OriginalDefinition}\n"
                     + $", {item.Type.BaseType}\n"
+                    + $", {item.Type}\n"
                     + $", {item.GetType().FullName}\n"
+                    + $", ============-- yyy ===============\n"
                     + $", {item.Type.Locations}\n"
                     + $", {item.Type.ContainingNamespace?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
                     + $", {item.Type.ContainingType?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
