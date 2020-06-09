@@ -451,7 +451,8 @@ namespace Utf8Json.UniversalCodeGenerator
             Console.WriteLine($""
                      + $"=============wowow =================="
                 );
-            var members = type.GetAllMembers().OfType<MemberDeclarationSyntax>();
+            //var members = type.GetAllMembers().OfType<MemberDeclarationSyntax>();
+            var members = type.GetAllMembers().OfType<PropertyDeclarationSyntax>();
             foreach (var member in members) {
                 var property = member as PropertyDeclarationSyntax;
                 Console.WriteLine($""
