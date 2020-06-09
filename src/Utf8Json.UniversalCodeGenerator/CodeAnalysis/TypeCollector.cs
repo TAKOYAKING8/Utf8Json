@@ -413,6 +413,9 @@ namespace Utf8Json.UniversalCodeGenerator
                     + $", {item.Type.ContainingSymbol?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
                     + $", {item.Name}\n"
                     + $", {item.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
+                    + $", {item.Type.ContainingNamespace?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
+                    + $", {item.Type.ContainingType?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
+
 
                     );
 
