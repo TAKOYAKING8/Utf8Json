@@ -407,8 +407,11 @@ namespace Utf8Json.UniversalCodeGenerator
                 };
                 System.Console.WriteLine($"{item.ContainingNamespace.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}, {item.ContainingNamespace.ToDisplayString()}, {item.Type.MetadataName}, {item.ContainingType.ToDisplayString()}" +
                     $", {item.Type.ContainingSymbol.ToDisplayString()}, , {item.Type.ContainingAssembly.ToDisplayString()}, {item.Type.ContainingModule.ToDisplayString()},,,,,,, \n" +
-                    $"{item.ContainingNamespace}, {item.DeclaredAccessibility}, {item.ContainingSymbol}" +
-                    $", {item.ContainingSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}");
+                    $"{item.ContainingNamespace}, {item.DeclaredAccessibility}, {item.ContainingSymbol}\n" +
+                    $", {item.ContainingSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
+                    + $", {item.ContainingNamespace}\n"
+
+                    );
 
                 if (!member.IsReadable && !member.IsWritable) continue;
 
