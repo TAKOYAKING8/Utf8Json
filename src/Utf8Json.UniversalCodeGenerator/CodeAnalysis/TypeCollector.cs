@@ -401,7 +401,7 @@ namespace Utf8Json.UniversalCodeGenerator
                     IsProperty = true,
                     IsField = false,
                     Name = name,
-                    Namespace = type.ContainingNamespace.ToDisplayString(),
+                    Namespace = item.ContainingNamespace.ToDisplayString(),
                     Type = item.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
                     ShortTypeName = item.Type.ToDisplayString(binaryWriteFormat)
                 };
@@ -427,7 +427,7 @@ namespace Utf8Json.UniversalCodeGenerator
                     IsProperty = false,
                     IsField = true,
                     Name = name,
-                    Namespace = type.ContainingNamespace.ToDisplayString(),
+                    Namespace = item.ContainingNamespace.ToDisplayString(),
                     Type = item.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
                     ShortTypeName = item.Type.ToDisplayString(binaryWriteFormat)
                 };
