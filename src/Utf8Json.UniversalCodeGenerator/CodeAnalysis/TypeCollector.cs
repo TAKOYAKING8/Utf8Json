@@ -201,14 +201,15 @@ namespace Utf8Json.UniversalCodeGenerator
         }
 
         private static void NewMethod(Compilation compilation) {
+            //https://aonasuzutsuki.hatenablog.jp/entry/2019/05/07/104305
             foreach (var tree in compilation.SyntaxTrees) {
                 // コンパイラからセマンティックモデルの取得
-                var semanticModel = compilation.GetSemanticModel(tree);
+                var model = compilation.GetSemanticModel(tree);
                 // 構文木からルートの子ノード群を取得
                 var nodes = tree.GetRoot().DescendantNodes();
                 var propertySyntaxArray = nodes.OfType<PropertyDeclarationSyntax>();
                 foreach (var syntax in propertySyntaxArray) {
-                    var symbol = semanticModel.GetDeclaredSymbol(syntax);
+                    var symbol = model.GetDeclaredSymbol(syntax);
                     Console.WriteLine("{0} {1}", symbol.DeclaredAccessibility, symbol);
                     Console.WriteLine(" Namespace: {0}", symbol.ContainingSymbol);
                     Console.WriteLine(" {0}: {1}", nameof(symbol.IsStatic), symbol.IsStatic);
@@ -218,7 +219,7 @@ namespace Utf8Json.UniversalCodeGenerator
                                     select new {
                                         Name = accessor.Keyword.ToString(),
                                         Access = accessor.Modifiers.Count > 0 ?
-                                            semanticModel.GetDeclaredSymbol(accessor).DeclaredAccessibility :
+                                            model.GetDeclaredSymbol(accessor).DeclaredAccessibility :
                                             Accessibility.Public
                                     };
 
@@ -241,11 +242,14 @@ namespace Utf8Json.UniversalCodeGenerator
                     foreach (var accessor in accessors)
                         Console.WriteLine("  {0} {1}", accessor.Access, accessor.Name);
 
+                    var symbolForUsing = model.GetSymbolInfo(syntax).Symbol;
+
                     Console.WriteLine($""
                      + $"identifier: {syntax.Identifier}\n" // prop name
                      + $"full string: {syntax.ToFullString()}\n" // public Vector3 Position { get; set; }
                      + $"type: {syntax.Type}\n" // Vector3
-                     + $"first directive : {syntax.GetFirstDirective()}\n" // Vector3
+                     + $"first directive : {syntax.GetFirstDirective()}\n"
+                     + $"using ContainingNamespace : {symbolForUsing.ContainingNamespace}\n" // Vector3
                     );
 
                     // 戻り値に関するSymbolInfoを取得
@@ -462,41 +466,41 @@ namespace Utf8Json.UniversalCodeGenerator
                     Type = item.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
                     ShortTypeName = item.Type.ToDisplayString(binaryWriteFormat)
                 };
-                System.Console.WriteLine($"{item.ContainingNamespace.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}, {item.ContainingNamespace.ToDisplayString()}, {item.Type.MetadataName}, {item.ContainingType.ToDisplayString()}" +
-                    $", {item.Type.ContainingSymbol.ToDisplayString()}, , {item.Type.ContainingAssembly.ToDisplayString()}, {item.Type.ContainingModule.ToDisplayString()},,,,,,, \n" +
-                    $"{item.ContainingNamespace}, {item.DeclaredAccessibility}, {item.ContainingSymbol}\n" +
-                    $", {item.ContainingSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
-                    + $", {item.ContainingNamespace.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}\n"
-                    + $", {item.Type.ContainingSymbol?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
-                    + $", {item.Name}\n"
-                    + $", {item.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
-                    + $", {item.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}\n"
-                    + $", {item.Type.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}\n"
-                    + $", {item.Type.ToDisplayString()}\n"
-                     + $", ============-- oooo ===============\n"
-                    + $", {item.Type.SpecialType}\n"
-                    + $", {item.Type.Kind}\n"
-                    + $", {item.Type.TypeKind}\n"
-                    + $", {item.Type.GetRootOperation()?.Syntax?.GetReference()}\n" // null
-                    + $", {item.Type.OriginalDefinition}\n" 
-                    + $", {item.Type.BaseType}\n" // System.ValueType,
-                    + $", {item.Type}\n"
-                    + $", {item.GetType().FullName}\n"
-                    + $", ============-- yyy ===============\n"
-                    + $", {item.Type.Locations}\n"
-                    + $", {item.Type.ContainingNamespace?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
-                    + $", {item.Type.ContainingType?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
-                    + $", {item.Type.ContainingNamespace?.ContainingCompilation?.GlobalNamespace?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
-                    + $", {item.OriginalDefinition}\n"
-                    //+ $", {item.DeclaringSyntaxReferences[0].SyntaxTree}\n"
-                    + $", {item.TypeCustomModifiers}\n"
-                    + $", ============-- type ===============\n"
-                    + $", {type.ContainingNamespace?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
-                    + $", {string.Join(", ", type.TypeArguments)}\n"
-                    //+ $", {item.Type.ContainingNamespace?.ContainingCompilation.us}\n"
+                //System.Console.WriteLine($"{item.ContainingNamespace.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}, {item.ContainingNamespace.ToDisplayString()}, {item.Type.MetadataName}, {item.ContainingType.ToDisplayString()}" +
+                //    $", {item.Type.ContainingSymbol.ToDisplayString()}, , {item.Type.ContainingAssembly.ToDisplayString()}, {item.Type.ContainingModule.ToDisplayString()},,,,,,, \n" +
+                //    $"{item.ContainingNamespace}, {item.DeclaredAccessibility}, {item.ContainingSymbol}\n" +
+                //    $", {item.ContainingSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
+                //    + $", {item.ContainingNamespace.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}\n"
+                //    + $", {item.Type.ContainingSymbol?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
+                //    + $", {item.Name}\n"
+                //    + $", {item.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
+                //    + $", {item.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}\n"
+                //    + $", {item.Type.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)}\n"
+                //    + $", {item.Type.ToDisplayString()}\n"
+                //     + $", ============-- oooo ===============\n"
+                //    + $", {item.Type.SpecialType}\n"
+                //    + $", {item.Type.Kind}\n"
+                //    + $", {item.Type.TypeKind}\n"
+                //    + $", {item.Type.GetRootOperation()?.Syntax?.GetReference()}\n" // null
+                //    + $", {item.Type.OriginalDefinition}\n" 
+                //    + $", {item.Type.BaseType}\n" // System.ValueType,
+                //    + $", {item.Type}\n"
+                //    + $", {item.GetType().FullName}\n"
+                //    + $", ============-- yyy ===============\n"
+                //    + $", {item.Type.Locations}\n"
+                //    + $", {item.Type.ContainingNamespace?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
+                //    + $", {item.Type.ContainingType?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
+                //    + $", {item.Type.ContainingNamespace?.ContainingCompilation?.GlobalNamespace?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
+                //    + $", {item.OriginalDefinition}\n"
+                //    //+ $", {item.DeclaringSyntaxReferences[0].SyntaxTree}\n"
+                //    + $", {item.TypeCustomModifiers}\n"
+                //    + $", ============-- type ===============\n"
+                //    + $", {type.ContainingNamespace?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
+                //    + $", {string.Join(", ", type.TypeArguments)}\n"
+                //    //+ $", {item.Type.ContainingNamespace?.ContainingCompilation.us}\n"
 
 
-                    );
+                //    );
 
                 if (!member.IsReadable && !member.IsWritable) continue;
 
@@ -504,18 +508,18 @@ namespace Utf8Json.UniversalCodeGenerator
 
                 CollectCore(item.Type); // recursive collect
             }
-            Console.WriteLine($""
-                     + $"=============wowow =================="
-                );
-            //var members = type.GetAllMembers().OfType<MemberDeclarationSyntax>();
-            var members = type.GetAllMembers().OfType<PropertyDeclarationSyntax>();
+            //Console.WriteLine($""
+            //         + $"=============wowow =================="
+            //    );
+            ////var members = type.GetAllMembers().OfType<MemberDeclarationSyntax>();
             //var members = type.GetAllMembers().OfType<PropertyDeclarationSyntax>();
-            foreach (var member in members) {
-                var property = member as PropertyDeclarationSyntax;
-                Console.WriteLine($""
-                     + $"{property.Identifier}\n"
-                );
-            }
+            ////var members = type.GetAllMembers().OfType<PropertyDeclarationSyntax>();
+            //foreach (var member in members) {
+            //    var property = member as PropertyDeclarationSyntax;
+            //    Console.WriteLine($""
+            //         + $"{property.Identifier}\n"
+            //    );
+            //}
 
             foreach (var item in type.GetAllMembers().OfType<IFieldSymbol>())
             {
