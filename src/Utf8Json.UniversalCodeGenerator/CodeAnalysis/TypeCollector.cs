@@ -267,7 +267,8 @@ namespace Utf8Json.UniversalCodeGenerator
                     var symbolForUsing = model.GetSymbolInfo(syntax).Symbol;
 
                     Console.WriteLine($""
-                     + $"symbolForUsing: {symbolForUsing.Name}\n"
+                     //+ $"symbolForUsing: {symbolForUsing.Name}\n" // null erro
+                     + $"UsingDirectiveSyntax: {syntax.Name}\n"
                     );
                 }
             }
