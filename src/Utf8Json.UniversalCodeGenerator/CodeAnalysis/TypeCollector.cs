@@ -244,8 +244,23 @@ namespace Utf8Json.UniversalCodeGenerator
                         Console.WriteLine("  {0} {1}", accessor.Access, accessor.Name);
 
                     var symbolForUsing = model.GetSymbolInfo(syntax).Symbol;
-                    var typeInfo= model.GetTypeInfo(syntax);
-                    var aliasInfo= model.GetAliasInfo(syntax);
+                    var namespaceOfWriteLineMethodSymbol = symbolForUsing?.ContainingNamespace;
+
+                    var usingSyntaxArray = nodes.OfType<UsingDirectiveSyntax>();
+                    foreach (var localSyntax in usingSyntaxArray) {
+                        var usingSymbol = model.GetSymbolInfo(localSyntax.Name).Symbol;
+                        if (!usingSymbol.Equals(namespaceOfWriteLineMethodSymbol))
+                            continue;
+
+                        Console.WriteLine($"ok\n"
+                        //+ $"symbolForUsing: {symbolForUsing.Name}\n" // null erro
+                        //+ $"same using?: {usingSymbol.Equals(namespaceOfWriteLineMethodSymbol)}\n"
+                        + $"UsingDirectiveSyntax: {localSyntax?.Name?.ToFullString()}\n"
+                        );
+                    }
+
+                    //var typeInfo= model.GetTypeInfo(syntax);
+                    //var aliasInfo= model.GetAliasInfo(syntax);
 
                     Console.WriteLine($""
                      + $"identifier: {syntax.Identifier}\n" // prop name
@@ -254,8 +269,8 @@ namespace Utf8Json.UniversalCodeGenerator
                      + $"first directive111 : {syntax.GetFirstDirective()}\n"
                     + $"using ContainingNamespace : {symbolForUsing?.ContainingNamespace.ToDisplayString()}\n"
                     + $"using name : {symbolForUsing?.Name?.ToString()}\n"
-                    + $"typeinfo name : {typeInfo.Type.Name}\n"
-                    + $"alias name : {aliasInfo.Name}\n"
+                    //+ $"typeinfo name : {typeInfo.Type.Name}\n"
+                    //+ $"alias name : {aliasInfo.Name}\n"
                     //+ $"using name : {symbolForUsing?.ContainingType}\n"
                     );
 
@@ -267,16 +282,7 @@ namespace Utf8Json.UniversalCodeGenerator
                     // Console.WriteLine(" Type: {0}", sym.ToDisplayString());
                 }
 
-                var usingSyntaxArray = nodes.OfType<UsingDirectiveSyntax>();
-                //foreach (var syntax in usingSyntaxArray) {
-                //    var symbolForUsing = model.GetSymbolInfo(syntax).Symbol;
-
-                //    Console.WriteLine($""
-                //     //+ $"symbolForUsing: {symbolForUsing.Name}\n" // null erro
-                //     + $"UsingDirectiveSyntax: {syntax?.Name?.ToFullString()}\n"
-                //     + $"== using\n"
-                //    );
-                //}
+                
             }
         }
 
