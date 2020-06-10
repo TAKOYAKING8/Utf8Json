@@ -248,9 +248,9 @@ namespace Utf8Json.UniversalCodeGenerator
                      + $"identifier: {syntax.Identifier}\n" // prop name
                      + $"full string: {syntax.ToFullString()}\n" // public Vector3 Position { get; set; }
                      + $"type: {syntax.Type}\n" // Vector3
-                     + $"first directive : {syntax.GetFirstDirective()}\n"
+                     + $"first directive111 : {syntax.GetFirstDirective()}\n"
                     + $"using ContainingNamespace : {symbolForUsing?.ContainingNamespace.ToDisplayString()}\n"
-                    //+ $"using name : {symbolForUsing?.Name}\n"
+                    + $"using name : {symbolForUsing?.Name?.ToString()}\n"
                     //+ $"using name : {symbolForUsing?.ContainingType}\n"
                     );
 
@@ -263,15 +263,15 @@ namespace Utf8Json.UniversalCodeGenerator
                 }
 
                 var usingSyntaxArray = nodes.OfType<UsingDirectiveSyntax>();
-                foreach (var syntax in usingSyntaxArray) {
-                    var symbolForUsing = model.GetSymbolInfo(syntax).Symbol;
+                //foreach (var syntax in usingSyntaxArray) {
+                //    var symbolForUsing = model.GetSymbolInfo(syntax).Symbol;
 
-                    Console.WriteLine($""
-                     //+ $"symbolForUsing: {symbolForUsing.Name}\n" // null erro
-                     + $"UsingDirectiveSyntax: {syntax?.Name?.ToFullString()}\n"
-                     + $"== using\n"
-                    );
-                }
+                //    Console.WriteLine($""
+                //     //+ $"symbolForUsing: {symbolForUsing.Name}\n" // null erro
+                //     + $"UsingDirectiveSyntax: {syntax?.Name?.ToFullString()}\n"
+                //     + $"== using\n"
+                //    );
+                //}
             }
         }
 
