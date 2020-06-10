@@ -259,13 +259,13 @@ namespace Utf8Json.UniversalCodeGenerator
                         Console.WriteLine("  {0} {1}", accessor.Access, accessor.Name);
 
                     var symbolForUsing = model.GetSymbolInfo(syntax).Symbol;
-                    var namespaceOfWriteLineMethodSymbol = symbolForUsing?.ContainingNamespace;
+                    //var namespaceOfWriteLineMethodSymbol = symbolForUsing?.ContainingNamespace; // null error
 
                     var usingSyntaxArray = nodes.OfType<UsingDirectiveSyntax>();
                     foreach (var localSyntax in usingSyntaxArray) {
                         var usingSymbol = model.GetSymbolInfo(localSyntax.Name).Symbol;
-                        if (!usingSymbol.Equals(namespaceOfWriteLineMethodSymbol))
-                            continue;
+                        //if (!usingSymbol.Equals(namespaceOfWriteLineMethodSymbol))
+                        //    continue;
 
                         Console.WriteLine($"ok\n"
                         //+ $"symbolForUsing: {symbolForUsing.Name}\n" // null erro
