@@ -292,7 +292,7 @@ namespace Utf8Json.UniversalCodeGenerator
                         );
                     }
 
-                    //var typeInfo= model.GetTypeInfo(syntax);
+                    var typeInfo = model.GetTypeInfo(syntax);
                     //var aliasInfo= model.GetAliasInfo(syntax);
 
                     Console.WriteLine($""
@@ -304,7 +304,7 @@ namespace Utf8Json.UniversalCodeGenerator
                      + $"first directive111 : {syntax.GetFirstDirective()}\n"
                     + $"using ContainingNamespace : {symbolForUsing?.ContainingNamespace.ToDisplayString()}\n"
                     + $"using name : {symbolForUsing?.Name?.ToString()}\n"
-                    //+ $"typeinfo name : {typeInfo.Type.Name}\n"
+                    + $"typeinfo name : {typeInfo.Type?.ContainingNamespace?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}\n"
                     //+ $"alias name : {aliasInfo.Name}\n"
                     //+ $"using name : {symbolForUsing?.ContainingType}\n"
                     );
