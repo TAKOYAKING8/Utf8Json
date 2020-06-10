@@ -242,14 +242,14 @@ namespace Utf8Json.UniversalCodeGenerator
                     foreach (var accessor in accessors)
                         Console.WriteLine("  {0} {1}", accessor.Access, accessor.Name);
 
-                    //var symbolForUsing = model.GetSymbolInfo(syntax).Symbol;
+                    var symbolForUsing = model.GetSymbolInfo(syntax).Symbol;
 
                     Console.WriteLine($""
                      + $"identifier: {syntax.Identifier}\n" // prop name
                      + $"full string: {syntax.ToFullString()}\n" // public Vector3 Position { get; set; }
                      + $"type: {syntax.Type}\n" // Vector3
                      + $"first directive : {syntax.GetFirstDirective()}\n"
-                    //+ $"using ContainingNamespace : {symbolForUsing?.ContainingNamespace}\n"
+                    + $"using ContainingNamespace : {symbolForUsing?.ContainingNamespace.ToDisplayString()}\n"
                     //+ $"using name : {symbolForUsing?.Name}\n"
                     //+ $"using name : {symbolForUsing?.ContainingType}\n"
                     );
