@@ -297,6 +297,7 @@ namespace Utf8Json.UniversalCodeGenerator
 
                     Console.WriteLine($""
                      + $"identifier: {syntax.Identifier}\n" // prop name
+                     + $"identifier full string: {syntax.Identifier.ToFullString()}\n" // prop name
                      + $"full string: {syntax.ToFullString()}\n" // public Vector3 Position { get; set; }
                      + $"type: {syntax.Type}\n" // Vector3
                      + $"first directive111 : {syntax.GetFirstDirective()}\n"
