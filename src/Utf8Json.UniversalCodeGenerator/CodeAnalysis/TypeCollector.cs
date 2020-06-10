@@ -249,9 +249,9 @@ namespace Utf8Json.UniversalCodeGenerator
                      + $"full string: {syntax.ToFullString()}\n" // public Vector3 Position { get; set; }
                      + $"type: {syntax.Type}\n" // Vector3
                      + $"first directive : {syntax.GetFirstDirective()}\n"
-                     + $"using ContainingNamespace : {symbolForUsing?.ContainingNamespace}\n"
-                     + $"using name : {symbolForUsing?.Name}\n"
-                     + $"using name : {symbolForUsing?.ContainingType}\n"
+                     //+ $"using ContainingNamespace : {symbolForUsing?.ContainingNamespace}\n"
+                     //+ $"using name : {symbolForUsing?.Name}\n"
+                     //+ $"using name : {symbolForUsing?.ContainingType}\n"
                     );
 
                     // 戻り値に関するSymbolInfoを取得
