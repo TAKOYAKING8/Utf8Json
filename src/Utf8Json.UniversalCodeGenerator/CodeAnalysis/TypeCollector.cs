@@ -20,6 +20,24 @@ using System.Linq;
 ///
 /// 個人ブログ　わかりやすかった
 /// https://aonasuzutsuki.hatenablog.jp/entry/2019/05/07/104305
+///
+///
+/// # やりたかったこと
+/// pre code genで生成してくれるが絶対パスで型情報を記述しないといけない。
+/// ex Vector3 -> UnityEngine.Vector3
+///
+/// これを修正するためにusing directiveを含んだ情報で自動生成されるようにしたかったが、できなかった。
+///
+/// 必要なファイルは
+/// - Definition.cs
+/// - TypeCollector.cs
+///
+/// ビルド環境はDocker
+/// - docker_utf-json...
+/// git cloneを内部で行っているが時間がかかるので、ファイルをcopyして、そのローカルファイルをgit cloneした方が良い。DockerのCopyは親ディレクトリを参照できないので、docker_utf8jsonの配下にこのソースをおかないといけない。シンボリックリンクでも行ける？gitのサブなんとか使えばいける？
+/// DockerのVolumeはビルド時には使用できないのでCopyを使う必要がある
+///
+/// gitの履歴にdownがあるのでfixupして最後にまとめること。
 /// </summary>
 namespace Utf8Json.UniversalCodeGenerator
 {
