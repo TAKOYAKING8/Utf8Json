@@ -243,6 +243,7 @@ namespace Utf8Json.UniversalCodeGenerator
                         Console.WriteLine("  {0} {1}", accessor.Access, accessor.Name);
 
                     var symbolForUsing = model.GetSymbolInfo(syntax).Symbol;
+                    var typeInfo= model.GetTypeInfo(syntax);
 
                     Console.WriteLine($""
                      + $"identifier: {syntax.Identifier}\n" // prop name
@@ -251,6 +252,7 @@ namespace Utf8Json.UniversalCodeGenerator
                      + $"first directive111 : {syntax.GetFirstDirective()}\n"
                     + $"using ContainingNamespace : {symbolForUsing?.ContainingNamespace.ToDisplayString()}\n"
                     + $"using name : {symbolForUsing?.Name?.ToString()}\n"
+                    + $"typeinfo name : {typeInfo.Type.Name}\n"
                     //+ $"using name : {symbolForUsing?.ContainingType}\n"
                     );
 
