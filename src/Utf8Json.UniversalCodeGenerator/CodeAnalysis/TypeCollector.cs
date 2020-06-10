@@ -268,7 +268,8 @@ namespace Utf8Json.UniversalCodeGenerator
 
                     Console.WriteLine($""
                      //+ $"symbolForUsing: {symbolForUsing.Name}\n" // null erro
-                     + $"UsingDirectiveSyntax: {syntax.Name}\n"
+                     //+ $"UsingDirectiveSyntax: {syntax.Name}\n"
+                     + $"== using\n"
                     );
                 }
             }
