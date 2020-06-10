@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Semantics;
 using System;
@@ -244,6 +245,7 @@ namespace Utf8Json.UniversalCodeGenerator
 
                     var symbolForUsing = model.GetSymbolInfo(syntax).Symbol;
                     var typeInfo= model.GetTypeInfo(syntax);
+                    var aliasInfo= model.GetAliasInfo(syntax);
 
                     Console.WriteLine($""
                      + $"identifier: {syntax.Identifier}\n" // prop name
@@ -253,6 +255,7 @@ namespace Utf8Json.UniversalCodeGenerator
                     + $"using ContainingNamespace : {symbolForUsing?.ContainingNamespace.ToDisplayString()}\n"
                     + $"using name : {symbolForUsing?.Name?.ToString()}\n"
                     + $"typeinfo name : {typeInfo.Type.Name}\n"
+                    + $"alias name : {aliasInfo.Name}\n"
                     //+ $"using name : {symbolForUsing?.ContainingType}\n"
                     );
 
