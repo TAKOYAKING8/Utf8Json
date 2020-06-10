@@ -300,6 +300,7 @@ namespace Utf8Json.UniversalCodeGenerator
                      + $"identifier full string: {syntax.Identifier.ToFullString()}\n" // prop name
                      + $"full string: {syntax.ToFullString()}\n" // public Vector3 Position { get; set; }
                      + $"type: {syntax.Type}\n" // Vector3
+                     + $"type full string: {syntax.Type.ToFullString()}\n" // Vector3
                      + $"first directive111 : {syntax.GetFirstDirective()}\n"
                     + $"using ContainingNamespace : {symbolForUsing?.ContainingNamespace.ToDisplayString()}\n"
                     + $"using name : {symbolForUsing?.Name?.ToString()}\n"
