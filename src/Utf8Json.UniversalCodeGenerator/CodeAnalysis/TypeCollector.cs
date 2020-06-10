@@ -5,7 +5,22 @@ using Microsoft.CodeAnalysis.Semantics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+/// <summary>
+/// doc
+/// https://docs.microsoft.com/en-us/dotnet/api/microsoft.codeanalysis.csharp.syntax.usingdirectivesyntax.name?view=roslyn-dotnet
+///
+/// using dire stack over
+/// https://stackoverflow.com/questions/39451235/find-usingdirectivesyntax-that-belongs-to-invocationexpressionsyntax
+///
+/// How to get method definition using Roslyn?
+/// https://stackoverflow.com/questions/26436368/how-to-get-method-definition-using-roslyn/26444528
+///
+/// microsoft tutorial semantic
+/// https://docs.microsoft.com/ja-jp/dotnet/csharp/roslyn-sdk/get-started/semantic-analysis
+///
+/// 個人ブログ　わかりやすかった
+/// https://aonasuzutsuki.hatenablog.jp/entry/2019/05/07/104305
+/// </summary>
 namespace Utf8Json.UniversalCodeGenerator
 {
     public class ReferenceSymbols
